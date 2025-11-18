@@ -35,11 +35,11 @@ export function TopNav() {
 
   return (
     <div className={cn(
-      'sticky top-0 z-40 flex items-center justify-between px-8 py-4 border-b transition-smooth',
+      'sticky top-0 z-40 flex items-center justify-between px-4 md:px-8 py-4 border-b transition-smooth',
       navStyles[theme]
     )}>
-      {/* Search Bar */}
-      <div className="flex-1 max-w-md">
+      {/* Search Bar - Hidden on mobile */}
+      <div className="hidden md:block flex-1 max-w-md">
         <div className="relative">
           <Search className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400" size={20} />
           <input
@@ -105,10 +105,10 @@ export function TopNav() {
           )}
         </div>
 
-        {/* Settings Button */}
+        {/* Settings Button - Hidden on mobile */}
         <button
           className={cn(
-            'p-3 rounded-xl transition-smooth',
+            'hidden md:block p-3 rounded-xl transition-smooth',
             buttonStyles[theme]
           )}
           title="Settings"
@@ -128,12 +128,12 @@ export function TopNav() {
           <div className="absolute top-2 right-2 w-2 h-2 bg-red-500 rounded-full" />
         </button>
 
-        {/* User Profile */}
+        {/* User Profile - Simplified on mobile */}
         <div className={cn(
-          'flex items-center gap-3 pl-4 pr-3 py-2 rounded-2xl cursor-pointer transition-smooth',
+          'flex items-center gap-2 md:gap-3 pl-2 md:pl-4 pr-2 md:pr-3 py-2 rounded-2xl cursor-pointer transition-smooth',
           buttonStyles[theme]
         )}>
-          <div className="text-right">
+          <div className="hidden md:block text-right">
             <div className="text-sm font-semibold">Scarlett</div>
             <div className="text-xs opacity-70">Admin</div>
           </div>
@@ -145,7 +145,7 @@ export function TopNav() {
           )}>
             SC
           </div>
-          <ChevronDown size={16} />
+          <ChevronDown size={16} className="hidden md:block" />
         </div>
       </div>
     </div>

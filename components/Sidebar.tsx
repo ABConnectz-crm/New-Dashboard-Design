@@ -1,6 +1,6 @@
 "use client";
 
-import React from 'react';
+import React, { useState } from 'react';
 import {
   LayoutDashboard,
   Users,
@@ -11,7 +11,9 @@ import {
   Zap,
   Target,
   Mail,
-  PhoneCall
+  PhoneCall,
+  X,
+  Menu
 } from 'lucide-react';
 import { useTheme } from '@/contexts/ThemeContext';
 import { cn } from '@/lib/utils';
@@ -34,6 +36,7 @@ const navigationItems = [
 
 export function Sidebar({ className }: SidebarProps) {
   const { theme } = useTheme();
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
   const sidebarStyles = {
     pastel: 'bg-gradient-to-b from-pastel-purple to-pastel-purple-dark',
@@ -53,14 +56,10 @@ export function Sidebar({ className }: SidebarProps) {
     minimal: 'text-minimal-blue bg-minimal-blue/10',
   };
 
-  return (
-    <div className={cn(
-      'fixed left-0 top-0 h-screen w-20 flex flex-col items-center py-8 transition-smooth',
-      sidebarStyles[theme],
-      className
-    )}>
+  const SidebarContent = () => (
+    <>
       {/* Logo */}
-      <div className="mb-12">
+      <div className="mb-8 md:mb-12">
         <div className={cn(
           'w-12 h-12 rounded-2xl flex items-center justify-center font-bold text-xl',
           theme === 'pastel' && 'bg-white/20 text-white',
@@ -72,12 +71,13 @@ export function Sidebar({ className }: SidebarProps) {
       </div>
 
       {/* Navigation Items */}
-      <nav className="flex-1 flex flex-col gap-4 w-full px-4">
+      <nav className="flex-1 flex flex-col gap-3 md:gap-4 w-full px-4">
         {navigationItems.map((item) => {
           const Icon = item.icon;
           return (
             <button
               key={item.label}
+              onClick={() => setIsMobileMenuOpen(false)}
               className={cn(
                 'w-12 h-12 rounded-xl flex items-center justify-center transition-smooth relative group',
                 item.active ? activeIconStyles[theme] : iconStyles[theme]
@@ -86,9 +86,9 @@ export function Sidebar({ className }: SidebarProps) {
             >
               <Icon size={22} strokeWidth={2} />
 
-              {/* Tooltip */}
+              {/* Tooltip - Desktop only */}
               <div className={cn(
-                'absolute left-16 px-3 py-2 rounded-lg text-sm font-medium whitespace-nowrap',
+                'hidden md:block absolute left-16 px-3 py-2 rounded-lg text-sm font-medium whitespace-nowrap',
                 'opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none z-50',
                 theme === 'pastel' && 'bg-pastel-purple text-white',
                 theme === 'analytics' && 'bg-analytics-card text-white',
@@ -96,6 +96,11 @@ export function Sidebar({ className }: SidebarProps) {
               )}>
                 {item.label}
               </div>
+
+              {/* Label - Mobile only */}
+              <span className="md:hidden absolute left-16 text-sm font-medium whitespace-nowrap">
+                {item.label}
+              </span>
             </button>
           );
         })}
@@ -103,13 +108,54 @@ export function Sidebar({ className }: SidebarProps) {
 
       {/* User Avatar at Bottom */}
       <div className={cn(
-        'w-12 h-12 rounded-xl flex items-center justify-center font-semibold',
+        'w-12 h-12 rounded-xl flex items-center justify-center font-semibold mt-4',
         theme === 'pastel' && 'bg-white/20 text-white',
         theme === 'analytics' && 'bg-white/10 text-white',
         theme === 'minimal' && 'bg-minimal-gray text-minimal-blue'
       )}>
         SC
       </div>
-    </div>
+    </>
+  );
+
+  return (
+    <>
+      {/* Mobile Menu Button - Fixed top left */}
+      <button
+        onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+        className={cn(
+          'md:hidden fixed top-4 left-4 z-50 p-3 rounded-xl shadow-lg transition-smooth',
+          theme === 'pastel' && 'bg-pastel-purple text-white',
+          theme === 'analytics' && 'bg-analytics-dark text-white',
+          theme === 'minimal' && 'bg-white text-minimal-blue border border-minimal-gray-dark'
+        )}
+        aria-label="Toggle menu"
+      >
+        {isMobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
+      </button>
+
+      {/* Mobile Overlay */}
+      {isMobileMenuOpen && (
+        <div
+          className="md:hidden fixed inset-0 bg-black/50 z-40 animate-fadeIn"
+          onClick={() => setIsMobileMenuOpen(false)}
+        />
+      )}
+
+      {/* Sidebar - Slide in on mobile, fixed on desktop */}
+      <div
+        className={cn(
+          // Mobile: Slide in from left
+          'fixed left-0 top-0 h-screen w-64 md:w-20 flex flex-col items-center py-8 transition-all duration-300 z-40',
+          // Mobile positioning
+          isMobileMenuOpen ? 'translate-x-0' : '-translate-x-full md:translate-x-0',
+          // Desktop: Always visible
+          sidebarStyles[theme],
+          className
+        )}
+      >
+        <SidebarContent />
+      </div>
+    </>
   );
 }

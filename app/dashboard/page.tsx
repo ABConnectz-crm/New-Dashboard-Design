@@ -47,7 +47,7 @@ export default function EnhancedDashboardPage() {
 
   return (
     <div className={cn('min-h-screen transition-smooth', bgStyles[theme])}>
-      <div className="p-8 space-y-8">
+      <div className="p-4 md:p-8 space-y-6 md:space-y-8">
         {/* Welcome Banner */}
         <div className="animate-slideDown">
           <WelcomeBanner />

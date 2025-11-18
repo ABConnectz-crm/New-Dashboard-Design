@@ -23,7 +23,7 @@ export default function RootLayout({
             <Sidebar />
 
             {/* Main Content Area */}
-            <div className="flex-1 ml-20">
+            <div className="flex-1 md:ml-20">
               {/* Top Navigation */}
               <TopNav />
 

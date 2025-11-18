@@ -1,0 +1,89 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  body {
+    @apply bg-pastel-background font-sans text-pastel-text antialiased;
+  }
+}
+
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
+  }
+
+  .card-neumorphic {
+    background: #FFFFFF;
+    box-shadow: 8px 8px 16px rgba(163, 177, 198, 0.6), -8px -8px 16px rgba(255, 255, 255, 0.5);
+    border-radius: 1.5rem;
+  }
+
+  .card-soft {
+    background: #FFFFFF;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04), 0 4px 16px rgba(0, 0, 0, 0.06);
+    border-radius: 1.5rem;
+  }
+
+  .transition-smooth {
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  .gradient-purple-yellow {
+    background: linear-gradient(135deg, #6A4DF4 0%, #FDCB50 100%);
+  }
+
+  .gradient-pink-orange {
+    background: linear-gradient(135deg, #FF6B9D 0%, #FF8F6B 100%);
+  }
+
+  .gradient-blue-purple {
+    background: linear-gradient(135deg, #60A5FA 0%, #A78BFA 100%);
+  }
+}
+
+/* Theme-specific styles */
+[data-theme="pastel"] {
+  --color-bg: #F5F6FA;
+  --color-card: #FFFFFF;
+  --color-text: #2D3142;
+  --color-primary: #6A4DF4;
+  --color-accent: #FDCB50;
+}
+
+[data-theme="analytics"] {
+  --color-bg: #1A1D29;
+  --color-card: #252837;
+  --color-text: #FFFFFF;
+  --color-primary: #FF6B9D;
+  --color-accent: #FF8F6B;
+}
+
+[data-theme="minimal"] {
+  --color-bg: #FFFFFF;
+  --color-card: #F9FAFB;
+  --color-text: #111827;
+  --color-primary: #4F46E5;
+  --color-accent: #7C3AED;
+}
+
+/* Scrollbar styles */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(106, 77, 244, 0.3);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(106, 77, 244, 0.5);
+}
